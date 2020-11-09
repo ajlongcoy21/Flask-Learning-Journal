@@ -44,8 +44,11 @@ def after_request(response):
     return response
 
 @app.route('/')
+@app.route('/entries')
 def index():
-    return render_template('layout.html')
+    template = 'index.html'
+    journal_entries = models.Entry.select().order_by(-models.Entry.timestamp)
+    return render_template(template, journal_entries=journal_entries)
 
 @app.route('/register', methods=('GET', 'POST'))
 def register():
@@ -98,8 +101,6 @@ def entries_new():
             resources=form.resources.data.strip())
         flash("Entry Posted!", "success")
         return redirect(url_for('index'))
-    else:
-        flash("Something bad happened", "error")
     return render_template('new.html', form=form)
 
 @app.route('/entries/<int:id>')

@@ -14,8 +14,8 @@
         <header>
             <div class="container">
                 <div class="site-header">
-                    {% if current_user.is_authenticated %}
                     <a class="logo" href="{{url_for('index')}}"><i class="material-icons">library_books</i></a>
+                    {% if current_user.is_authenticated %}
                     <a class="button icon-right" href="{{url_for('logout')}}"><span>Logout</span> <i class="material-icons">logout</i></a>
                     <a class="button icon-right" href="{{url_for('entries_new')}}"><span>New Entry</span> <i class="material-icons">add</i></a>
                     {% else %}
