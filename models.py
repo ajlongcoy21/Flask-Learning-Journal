@@ -40,11 +40,12 @@ class User(UserMixin, Model):
 class Entry(Model):
     id = IntegerField(primary_key=True)
     timestamp = DateTimeField(default=datetime.datetime.now)
-    user = ForeignKeyField(
-        User,
-        related_name='entries'
-    )
-    content = TextField()
+    user = ForeignKeyField( User, related_name='entries')
+    title = CharField()
+    date = DateField()
+    time = TimeField()
+    learned = TextField()
+    resources = TextField()
 
     class Meta:
         database = DATABASE

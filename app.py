@@ -87,6 +87,21 @@ def logout():
     flash("You've been logged out! Come back soon!", "success")
     return redirect(url_for('index'))
 
+@app.route('/entries/new', methods=('GET', 'POST'))
+def entries_new():
+    form = forms.EntryForm()
+    if form.validate_on_submit():
+        models.Entry.create(
+            user=g.user._get_current_object(), 
+            title=form.title.data.strip(), 
+            date=form.date.data, time=form.time.data, learned=form.learned.data.strip(), 
+            resources=form.resources.data.strip())
+        flash("Entry Posted!", "success")
+        return redirect(url_for('index'))
+    else:
+        flash("Something bad happened", "error")
+    return render_template('new.html', form=form)
+
 @app.route('/entries/<int:id>')
 def entries(id):
     return render_template('detail.html')

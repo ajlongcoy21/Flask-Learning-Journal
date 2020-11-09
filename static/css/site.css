@@ -1,20 +1,4 @@
 
-/*Notifications*/
-.notification {
-	text-align: center;
-	padding: 10px 20px;
-	border-radius: 4px;
-	color: #fff;
-  }
-  .success {
-	background: #70DA8B;
-	color: #4DA463;
-  }
-  .error {
-	background: #FFE6B2;
-	color: #C5A14E;
-	margin-bottom: 20px;
-  }
   
 /* ==========================================================================
    Global Styles
@@ -29,6 +13,9 @@ body {
 .container {
 	margin: 0 auto;
 	padding: 0 25px;
+}
+header .container {
+	background-color: white;
 }
 header .site-header {
 	margin: 0 auto;
@@ -243,3 +230,23 @@ input[type=submit] {
 }
 
 
+/*Notifications*/
+.notification {
+	text-align: center;
+	padding: 10px 20px;
+	border-radius: 4px;
+	color: #fff;
+  }
+  .success {
+	background: #70DA8B;
+	color: #4DA463;
+  }
+  .error {
+	background: #FFE6B2;
+	color: #C5A14E;
+	margin-bottom: 20px;
+  }
+
+  label[for=csrf_token] { 
+	display: none;
+  }
