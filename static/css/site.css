@@ -1,5 +1,21 @@
 
-
+/*Notifications*/
+.notification {
+	text-align: center;
+	padding: 10px 20px;
+	border-radius: 4px;
+	color: #fff;
+  }
+  .success {
+	background: #70DA8B;
+	color: #4DA463;
+  }
+  .error {
+	background: #FFE6B2;
+	color: #C5A14E;
+	margin-bottom: 20px;
+  }
+  
 /* ==========================================================================
    Global Styles
    ========================================================================== */
@@ -59,6 +75,7 @@ footer {
 .button.icon-right {
 	padding-right: 30px;
 	top: -10px;
+	border: 2px solid white;
 }
 .button.icon-left {
 	padding-left: 30px;
@@ -224,17 +241,5 @@ form textarea:hover {
 input[type=submit] {
 	margin-right: 5px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
