@@ -5,7 +5,7 @@
         {% for journal_entry in journal_entries%}
         <article>
             <h2><a href="/entries/{{journal_entry.id}}">{{ journal_entry.title }}</a></h2>
-            <time datetime="{{journal_entry.date}}">{{ journal_entry.date }}</time>
+            <time datetime="{{journal_entry.date}}">{{ journal_entry.date.strftime('%B %d, %Y')  }}</time>
         </article>
         {% endfor %}
     </div>

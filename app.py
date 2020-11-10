@@ -105,8 +105,47 @@ def entries_new():
 
 @app.route('/entries/<int:id>')
 def entries(id):
-    return render_template('detail.html')
+    try:
+        journal_entry = models.Entry.get_by_id(id)
+    except models.DoesNotExist:
+        flash("Journal entry does not exist!", "error")
+        return redirect(url_for('index'))
+    else:
+        return render_template('detail.html', entry=journal_entry)
 
+@app.route('/entries/<int:id>/edit', methods=('GET', 'POST'))
+def entries_edit(id):
+    try:
+        journal_entry = models.Entry.get_by_id(id)
+    except models.DoesNotExist:
+        flash("Journal entry does not exist!", "error")
+        return redirect(url_for('index'))
+    else:
+        form = forms.EditForm(title=journal_entry.title, date=journal_entry.date, time=journal_entry.time, learned=journal_entry.learned, resources=journal_entry.resources)
+
+        if form.validate_on_submit():
+            models.Entry.update(
+                user=g.user._get_current_object(), 
+                title=form.title.data.strip(), 
+                date=form.date.data, time=form.time.data, learned=form.learned.data.strip(), 
+                resources=form.resources.data.strip()).where(models.Entry.id == id).execute()
+            flash("Entry Updated!", "success")
+            return redirect(url_for('index'))
+        else:
+            print('here now')
+            return render_template('edit.html', form=form, entry=journal_entry)
+
+@app.route('/entries/<int:id>/delete')
+def delete(id):
+    try:
+        models.Entry.get_by_id(id)
+    except models.DoesNotExist:
+        flash("Journal entry does not exist, so it cannot be deleted", "error")
+        return redirect(url_for('index'))
+    else:
+        models.Entry.delete_by_id(id)
+        flash("Journal entry successfully deleted!", "success")
+        return redirect(url_for('index'))
 
 if __name__ == '__main__':
     models.initialize()

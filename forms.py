@@ -51,4 +51,11 @@ class EntryForm(Form):
     time = TimeField('Time', validators=[time_ok], id='time-spent')
     learned = TextAreaField('What I Learned', validators=[DataRequired()], id='what-i-learned')
     resources = TextAreaField('Resources to Remember', validators=[DataRequired()], id='resources-to-remember')
- 
+
+class EditForm(Form):
+
+    title = StringField('Title', validators=[DataRequired()])
+    date = DateField('Date', format='%m-%d-%Y', validators=[date_ok])
+    time = TimeField('Time', validators=[time_ok], id='time-spent')
+    learned = TextAreaField('What I Learned', validators=[DataRequired()], id='what-i-learned')
+    resources = TextAreaField('Resources to Remember', validators=[DataRequired()], id='resources-to-remember')
