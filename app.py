@@ -1,6 +1,7 @@
 # source ./env/bin/activate
 # deactivate
 
+# import files
 from flask import Flask, g, render_template, flash, redirect, url_for, abort
 from flask_bcrypt import check_password_hash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
@@ -9,13 +10,16 @@ import forms
 import models
 import datetime
 
+# setup environment
 DEBUG = True
 PORT = 8000
 HOST = '0.0.0.0'
 
+# setup app
 app = Flask(__name__)
 app.secret_key = 'asdf;lkajd23497@)(*@&$asfl;ajaf'
 
+# setup login manager
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -27,6 +31,7 @@ def load_user(userid):
     except models.DoesNotExist:
         return None
 
+# connect to db and setup user
 @app.before_request
 def before_request():
     """
@@ -36,6 +41,7 @@ def before_request():
     g.db.connect()
     g.user = current_user
 
+# after request close database
 @app.after_request
 def after_request(response):
     """
@@ -44,6 +50,7 @@ def after_request(response):
     g.db.close()
     return response
 
+# setup app routes
 @app.route('/')
 @app.route('/entries')
 def index():
