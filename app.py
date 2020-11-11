@@ -137,6 +137,7 @@ def entries_edit(id):
 
 @app.route('/entries/<int:id>/delete')
 def delete(id):
+    
     try:
         models.Entry.get_by_id(id)
     except models.DoesNotExist:

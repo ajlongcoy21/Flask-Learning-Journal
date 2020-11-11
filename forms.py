@@ -1,7 +1,7 @@
 from flask_wtf import Form
 from models import User
 
-from wtforms import StringField, PasswordField, TextAreaField, DateField, TimeField
+from wtforms import StringField, PasswordField, TextAreaField, DateField, TimeField, IntegerField
 from wtforms.validators import DataRequired, Regexp, ValidationError, Email, Length, EqualTo
 
 
@@ -18,8 +18,8 @@ def date_ok(form, field):
         raise ValidationError('Please enter the date in the format mm-dd-yyyy.')
 
 def time_ok(form, field):
-    if field.data == None:
-        raise ValidationError('Please enter the time in the format hh:mm.')
+    if isinstance(field.data, int):
+        raise ValidationError('Please enter an integer for the hours spent.')
 
 class RegisterForm(Form):
     username = StringField( 'Username', validators=[ DataRequired(), Regexp(r'^[a-zA-Z0-9_]+$',message="Username should be one word, letters, numbers, and underscores only."), name_exists ])
@@ -48,7 +48,7 @@ class EntryForm(Form):
 
     title = StringField('Title', validators=[DataRequired()])
     date = DateField('Date', format='%m-%d-%Y', validators=[date_ok])
-    time = TimeField('Time', validators=[time_ok], id='time-spent')
+    time = IntegerField('Time', validators=[], id='time-spent')
     learned = TextAreaField('What I Learned', validators=[DataRequired()], id='what-i-learned')
     resources = TextAreaField('Resources to Remember', validators=[DataRequired()], id='resources-to-remember')
 
@@ -56,6 +56,6 @@ class EditForm(Form):
 
     title = StringField('Title', validators=[DataRequired()])
     date = DateField('Date', format='%m-%d-%Y', validators=[date_ok])
-    time = TimeField('Time', validators=[time_ok], id='time-spent')
+    time = IntegerField('Time', validators=[], id='time-spent')
     learned = TextAreaField('What I Learned', validators=[DataRequired()], id='what-i-learned')
     resources = TextAreaField('Resources to Remember', validators=[DataRequired()], id='resources-to-remember')

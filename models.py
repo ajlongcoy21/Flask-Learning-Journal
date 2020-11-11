@@ -43,7 +43,7 @@ class Entry(Model):
     user = ForeignKeyField( User, related_name='entries')
     title = CharField()
     date = DateField()
-    time = TimeField()
+    time = IntegerField()
     learned = TextField()
     resources = TextField()
 

@@ -7,7 +7,7 @@
             <time datetime="{{entry.date }}">{{ entry.date.strftime('%B %d, %Y') }}</time>
             <div class="entry">
                 <h3>Time Spent: </h3>
-                <p>{{entry.time.hour}} Hours</p>
+                <p>{{entry.time}} Hours</p>
             </div>
             <div class="entry">
                 <h3>What I Learned:</h3>
@@ -26,4 +26,9 @@
             </div>
         </article>
     </div>
+    {% if current_user.is_authenticated %}
+    <div class="edit">
+        <p><a class="button icon-right" href="/entries/{{entry.id}}/edit"><span>Edit</span> <i class="material-icons">create</i></a><a class="button icon-right" href="/entries/{{entry.id}}/delete"><span>Remove</span> <i class="material-icons">remove_circle</i></a></p>
+    </div>
+    {% endif %}
 {% endblock %}
