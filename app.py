@@ -7,6 +7,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 
 import forms
 import models
+import datetime
 
 DEBUG = True
 PORT = 8000
@@ -121,7 +122,8 @@ def entries_edit(id):
         flash("Journal entry does not exist!", "error")
         return redirect(url_for('index'))
     else:
-        form = forms.EditForm(title=journal_entry.title, date=journal_entry.date, time=journal_entry.time, learned=journal_entry.learned, resources=journal_entry.resources)
+        form = forms.EditForm(title=journal_entry.title, date=journal_entry.date, 
+        time=journal_entry.time, learned=journal_entry.learned, resources=journal_entry.resources)
 
         if form.validate_on_submit():
             models.Entry.update(
@@ -130,7 +132,7 @@ def entries_edit(id):
                 date=form.date.data, time=form.time.data, learned=form.learned.data.strip(), 
                 resources=form.resources.data.strip()).where(models.Entry.id == id).execute()
             flash("Entry Updated!", "success")
-            return redirect(url_for('index'))
+            return redirect('/entries/{}'.format(id))
         else:
             print('here now')
             return render_template('edit.html', form=form, entry=journal_entry)
@@ -157,7 +159,20 @@ if __name__ == '__main__':
             password='test',
             admin=True
         )
+
     except ValueError:
         pass
+    else:
+        user = models.User.get(models.User.email == 'testuser@gmail.com')
+        temp_date = datetime.datetime.today()
+
+        try:
+            models.Entry.create(user=user, title='Day 1 - Python', 
+                date=datetime.date(temp_date.year, temp_date.month, temp_date.day),
+                time=7, learned='How to develop in python.', 
+                resources='computer, desk, soda, monitor')
+
+        except ValueError:
+            pass
 
     app.run(debug=DEBUG, host=HOST, port=PORT)

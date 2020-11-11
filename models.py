@@ -19,6 +19,7 @@ class User(UserMixin, Model):
         order_by = ('-joined_at',)
 
     def get_entries(self):
+        pass
         return Entry.select().where(Entry.user == self)
 
     @classmethod

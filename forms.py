@@ -22,7 +22,9 @@ def time_ok(form, field):
         raise ValidationError('Please enter an integer for the hours spent.')
 
 class RegisterForm(Form):
-    username = StringField( 'Username', validators=[ DataRequired(), Regexp(r'^[a-zA-Z0-9_]+$',message="Username should be one word, letters, numbers, and underscores only."), name_exists ])
+    username = StringField( 'Username', validators=[ DataRequired(), 
+    Regexp(r'^[a-zA-Z0-9_]+$',message="Username should be one word, letters, numbers, and underscores only."), 
+    name_exists ])
     email = StringField('Email', validators=[ DataRequired(), Email(), email_exists ])
 
     password = PasswordField(
